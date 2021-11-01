@@ -1,6 +1,5 @@
 FROM certbot/dns-route53
 ENTRYPOINT []
-VOLUME ["/etc/letsencrypt"]
 ADD [ \
   "https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf", \
   "/etc/letsencrypt/options-ssl-nginx.conf" \
@@ -11,13 +10,15 @@ ADD [ \
 ]
 
 # Setup renew cron
-RUN echo "0 */12 * * * certbot renew" | crontab -
+ADD certbot-renew-cron /etc/periodic/12h/certbot-renew-cron
+RUN chmod 700 /etc/periodic/12h/certbot-renew-cron
+RUN echo "0       6,18       *       *       *       run-parts /etc/periodic/12h" >> /etc/crontabs/root
 
 CMD certbot certonly --non-interactive --agree-tos --email ${CONTACT_EMAIL} \
   --keep-until-expiring \
   --dns-route53 \
   -d ${DOMAIN} \
   -d *.${DOMAIN} \
-  # Sleep to keep conatiner running for renew cron
-  && sleep infinity \
+  # Run cron for renew
+  && crond -f -l 8 \
 ]
