@@ -12,7 +12,7 @@ ADD [ \
 # Setup renew cron
 ADD certbot-renew-cron /etc/periodic/12h/certbot-renew-cron
 RUN chmod 700 /etc/periodic/12h/certbot-renew-cron
-RUN echo "0       6,18       *       *       *       run-parts /etc/periodic/12h" >> /etc/crontabs/root
+RUN echo "0       6,18    *       *       *       run-parts /etc/periodic/12h" >> /etc/crontabs/root
 
 CMD certbot certonly --non-interactive --agree-tos --email ${CONTACT_EMAIL} \
   --keep-until-expiring \
