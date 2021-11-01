@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  nginx:
+   build: ./nginx
+   restart: unless-stopped
+   ports:
+     - "80:80"
+     - "443:443"
+   volumes:
+     - ./nginx/conf:/etc/nginx/conf.d
+     - letsencrypt:/etc/letsencrypt
+  certbot:
+    build: ./certbot-route53
+    restart: unless-stopped
+    volumes:
+      - letsencrypt:/etc/letsencrypt
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - CONTACT_EMAIL=${CONTACT_EMAIL}
+      - DOMAIN=${DOMAIN}
+volumes:
+  letsencrypt:
