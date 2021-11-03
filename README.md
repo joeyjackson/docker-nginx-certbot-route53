@@ -46,8 +46,6 @@ server {
 ```
 3. Start the nginx server and other app(s) with the network override:
 ```
+$ docker-compose -f path/to/other/app/docker-compose.yml -f compose-override/docker-compose.override.yml up -d
 $ docker-compose -f docker-compose.yml -f compose-override/docker-compose.override.yml up -d
-```
-```
-$ docker-compose -f docker-compose.yml -f path/to/compose-override/docker-compose.override.yml up -d
 ```
