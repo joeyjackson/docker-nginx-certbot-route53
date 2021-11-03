@@ -1,14 +1,16 @@
 version: '3.9'
 services:
   nginx:
-   build: ./nginx
-   restart: unless-stopped
-   ports:
+    build: ./nginx
+    restart: unless-stopped
+    ports:
      - "80:80"
      - "443:443"
-   volumes:
-     - ./nginx/conf:/etc/nginx/conf.d
+    volumes:
+     - ./nginx/templates:/etc/nginx/templates
      - letsencrypt:/etc/letsencrypt
+    environment:
+     - DOMAIN=${DOMAIN}
   certbot:
     build: ./certbot-route53
     restart: unless-stopped
