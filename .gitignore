@@ -1,1 +1,4 @@
 .env
+nginx/static/
+!nginx/static/50x.html
+!nginx/static/index.html
