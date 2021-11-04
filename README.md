@@ -23,7 +23,7 @@ server {
     alias       /var/www/<path to content in nginx/static>/;
     # Alternativly use root: https://www.techcoil.com/blog/understanding-the-difference-between-the-root-and-alias-directives-in-nginx/
     # root /var/www/<path to content in nginx/static>/;
-    index       gears.html
+    index       index.html
     try_files   $uri $uri/ =404;
   }
 
