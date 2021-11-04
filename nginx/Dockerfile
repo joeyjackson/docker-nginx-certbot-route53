@@ -1,5 +1,8 @@
 FROM nginx:alpine
 
+# Delete the default configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
 # Setup reload cron
 RUN echo "0       19      *       *       *       nginx -s reload" >> /etc/crontabs/root
 

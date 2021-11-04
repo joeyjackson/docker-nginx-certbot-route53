@@ -19,9 +19,12 @@ Example: Add a route to content
 server {
   ...
 
-  location /myroute/ {
-    index mypage.html;
-    root /var/www/<path to content in nginx/static>/;
+  location /myroute {
+    alias       /var/www/<path to content in nginx/static>/;
+    # Alternativly use root: https://www.techcoil.com/blog/understanding-the-difference-between-the-root-and-alias-directives-in-nginx/
+    # root /var/www/<path to content in nginx/static>/;
+    index       gears.html
+    try_files   $uri $uri/ =404;
   }
 
   ...
